@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Tracker System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  
+
+    <!-- Login/Register Forms -->
+    <div id="auth-container" class="auth-container">
+        <div class="auth-wrapper">
+            <div class="auth-form-container">
+                <!-- Login Form -->
+                <div id="login-form" class="auth-form active">
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to your account</p>
+                    <form onsubmit="login(event)">
+                        <div class="form-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="login-email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="login-password" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="auth-btn">Sign In</button>
+                        <p class="auth-switch">
+                            Don't have an account? 
+                            <a href="#" onclick="switchAuth('register')">Sign up</a>
+                        </p>
+                    </form>
+                </div>
+
+                <!-- Register Form -->
+                <div id="register-form" class="auth-form">
+                    <h2>Create Account</h2>
+                    <p>Start tracking your health journey</p>
+                    <form onsubmit="register(event)">
+                        <div class="form-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="register-name" placeholder="Full Name" required>
+                        </div>
+                        <div class="form-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="register-email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="register-password" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="auth-btn">Sign Up</button>
+                        <p class="auth-switch">
+                            Already have an account? 
+                            <a href="#" onclick="switchAuth('login')">Sign in</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="app-container" class="app-container hidden">
+
+
+        <!--uppernavigation-->
+          <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Health Tracker</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="#trends" class="nav-link" data-section="trends">
+                    <i class="fas fa-chart-line"></i> Trends
+                </a>
+                <a href="#goals" class="nav-link" data-section="goals">
+                    <i class="fas fa-target"></i> Goals
+                </a>
+                <a href="#history" class="nav-link" data-section="history">
+                    <i class="fas fa-history"></i> History
+                </a>
+                <a href="#profile" class="nav-link" data-section="profile"> 
+                    <i class="fas fa-user"></i> Profile
+                </a>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="container">
+                <h1>Dashboard</h1>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-walking"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Steps</h3>
+                            <div class="stat-value" id="today-steps">0</div>
+                            <div class="stat-goal">Goal: <span id="steps-goal">10,000</span></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Water</h3>
+                            <div class="stat-value" id="today-water">0</div>
+                            <div class="stat-goal">Goal: <span id="water-goal">2,000</span> ml</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Sleep</h3>
+                            <div class="stat-value" id="today-sleep">0</div>
+                            <div class="stat-goal">Goal: <span id="sleep-goal">8</span> hours</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Calories</h3>
+                            <div class="stat-value" id="today-calories">0</div>
+                            <div class="stat-goal">Goal: <span id="calories-goal">2,000</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-actions">
+                    <button class="action-btn primary" onclick="showAddDataModal()">
+                        <i class="fas fa-plus"></i> Add Today's Data
+                    </button>
+                    <button class="action-btn secondary" onclick="showSection('trends')">
+                        <i class="fas fa-chart-line"></i> View Trends
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trends Section -->
+        <section id="trends" class="section">
+            <div class="container">
+                <h1>Health Trends</h1>
+                <div class="trends-controls">
+                    <div class="timeframe-selector">
+                        <label>Timeframe:</label>
+                        <select id="timeframe-select" onchange="updateTrendsChart()">
+                            <option value="7">Last 7 Days</option>
+                            <option value="14">Last 14 Days</option>
+                            <option value="30">Last 30 Days</option>
+                            <option value="90">Last 3 Months</option>
+                        </select>
+                    </div>
+                    <div class="metric-selector">
+                        <button class="metric-btn active" data-metric="steps" onclick="switchMetric('steps')">
+                            <i class="fas fa-walking"></i> Steps
+                        </button>
+                        <button class="metric-btn" data-metric="water" onclick="switchMetric('water')">
+                            <i class="fas fa-tint"></i> Water (ml)
+                        </button>
+                        <button class="metric-btn" data-metric="sleep" onclick="switchMetric('sleep')">
+                            <i class="fas fa-bed"></i> Sleep (h)
+                        </button>
+                        <button class="metric-btn" data-metric="calories" onclick="switchMetric('calories')">
+                            <i class="fas fa-fire"></i> Calories
+                        </button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="trends-chart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Goals Section -->
+        <section id="goals" class="section">
+            <div class="container">
+                <h1>Health Goals</h1>
+                <div class="goals-grid">
+                    <div class="goal-card">
+                        <h3>Daily Goals</h3>
+                        <form onsubmit="updateGoals(event, 'daily')">
+                            <div class="goal-input-group">
+                                <label>Steps:</label>
+                                <input type="number" id="daily-steps-goal" placeholder="10000" min="0">
+                            </div>
+                            <div class="goal-input-group">
+                                <label>Water (ml):</label>
+                                <input type="number" id="daily-water-goal" placeholder="2000" min="0">
+                            </div>
+                            <div class="goal-input-group">
+                                <label>Sleep (hours):</label>
+                                <input type="number" id="daily-sleep-goal" placeholder="8" min="0" max="24" step="0.5">
+                            </div>
+                            <div class="goal-input-group">
+                                <label>Calories:</label>
+                                <input type="number" id="daily-calories-goal" placeholder="2000" min="0">
+                            </div>
+                            <button type="submit" class="goal-btn">Update Daily Goals</button>
+                        </form>
+                    </div>
+
+                    <div class="goal-card">
+                        <h3>Weekly Goals</h3>
+                        <form onsubmit="updateGoals(event, 'weekly')">
+                            <div class="goal-input-group">
+                                <label>Steps:</label>
+                                <input type="number" id="weekly-steps-goal" placeholder="70000" min="0">
+                            </div>
+                            <div class="goal-input-group">
+                                <label>Water (ml):</label>
+                                <input type="number" id="weekly-water-goal" placeholder="14000" min="0">
+                            </div>
+                            <div class="goal-input-group">
+                                <label>Sleep (hours):</label>
+                                <input type="number" id="weekly-sleep-goal" placeholder="56" min="0" step="0.5">
+                            </div>
+                            <div class="goal-input-group">
+                                <label>Calories:</label>
+                                <input type="number" id="weekly-calories-goal" placeholder="14000" min="0">
+                            </div>
+                            <button type="submit" class="goal-btn">Update Weekly Goals</button>
+                        </form>
+                    </div>
+
+                    <div class="goal-card">
+                        <h3>Monthly Goals</h3>
+                        <form onsubmit="updateGoals(event, 'monthly')">
+                            <div class="goal-input-group">
+                                <label>Steps:</label>
+                                <input type="number" id="monthly-steps-goal" placeholder="300000" min="0">
+                            </div>
+                            <div class="goal-input-group">
+                                <label>Water (ml):</label>
+                                <input type="number" id="monthly-water-goal" placeholder="60000" min="0">
+                            </div>
+                            <div class="goal-input-group">
+                                <label>Sleep (hours):</label>
+                                <input type="number" id="monthly-sleep-goal" placeholder="240" min="0" step="0.5">
+                            </div>
+                            <div class="goal-input-group">
+                                <label>Calories:</label>
+                                <input type="number" id="monthly-calories-goal" placeholder="60000" min="0">
+                            </div>
+                            <button type="submit" class="goal-btn">Update Monthly Goals</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section id="history" class="section">
+            <div class="container">
+                <h1>Health History</h1>
+                <div class="history-controls">
+                    <div class="date-range">
+                        <label>Date Range:</label>
+                        <input type="date" id="start-date" onchange="loadHistory()">
+                        <span>to</span>
+                        <input type="date" id="end-date" onchange="loadHistory()">
+                    </div>
+                </div>
+                <div class="history-table-container">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Steps</th>
+                                <th>Water (ml)</th>
+                                <th>Sleep (h)</th>
+                                <th>Calories</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-tbody">
+                            <!-- History data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="section">
+            <div class="container">
+                <h1>Profile Settings</h1>
+                <div class="profile-content">
+                    <div class="profile-info">
+                        <h3>Account Information</h3>
+                        <div class="info-item">
+                            <label>Name:</label>
+                            <span id="profile-name">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Email:</label>
+                            <span id="profile-email">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Member Since:</label>
+                            <span id="profile-joined">-</span>
+                        </div>
+                    </div>
+                    <div class="profile-stats">
+                        <h3>Your Statistics</h3>
+                        <div class="stat-item">
+                            <label>Total Days Tracked:</label>
+                            <span id="total-days">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <label>Average Steps/Day:</label>
+                            <span id="avg-steps">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <label>Average Water/Day:</label>
+                            <span id="avg-water">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <label>Average Sleep/Day:</label>
+                            <span id="avg-sleep">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Add Data Modal -->
+    <div id="add-data-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Today's Health Data</h2>
+                <span class="close" onclick="closeAddDataModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="addHealthData(event)">
+                    <div class="form-group">
+                        <label>Steps:</label>
+                        <input type="number" id="add-steps" placeholder="Enter steps" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Water Intake (ml):</label>
+                        <input type="number" id="add-water" placeholder="Enter water intake" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Sleep Duration (hours):</label>
+                        <input type="number" id="add-sleep" placeholder="Enter sleep duration" min="0" max="24" step="0.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Calories Consumed:</label>
+                        <input type="number" id="add-calories" placeholder="Enter calories" min="0" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn secondary" onclick="closeAddDataModal()">Cancel</button>
+                        <button type="submit" class="btn primary">Save Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Data Modal -->
+    <div id="edit-data-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Health Data</h2>
+                <span class="close" onclick="closeEditDataModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="updateHealthData(event)">
+                    <input type="hidden" id="edit-record-id">
+                    <div class="form-group">
+                        <label>Steps:</label>
+                        <input type="number" id="edit-steps" placeholder="Enter steps" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Water Intake (ml):</label>
+                        <input type="number" id="edit-water" placeholder="Enter water intake" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Sleep Duration (hours):</label>
+                        <input type="number" id="edit-sleep" placeholder="Enter sleep duration" min="0" max="24" step="0.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Calories Consumed:</label>
+                        <input type="number" id="edit-calories" placeholder="Enter calories" min="0" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn secondary" onclick="closeEditDataModal()">Cancel</button>
+                        <button type="submit" class="btn primary">Update Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

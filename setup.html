@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Tracker Setup</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .setup-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .setup-step {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+        .setup-step h3 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e1e5e9;
+        }
+        .feature-list li:before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="setup-container">
+        <h1>🏥 Health Tracker System Setup</h1>
+        
+        <div class="setup-step">
+            <h3>📋 System Overview</h3>
+            <p>Welcome to the Health Tracker System! This comprehensive application helps users monitor their daily health activities and achieve wellness goals.</p>
+            
+            <h4>Key Features:</h4>
+            <ul class="feature-list">
+                <li>User authentication and secure login</li>
+                <li>Daily health data tracking (steps, water, sleep, calories)</li>
+                <li>Interactive trends visualization with VIBGYOR colors</li>
+                <li>Customizable timeframes (7, 14, 30, 90 days)</li>
+                <li>Goal setting for daily, weekly, and monthly targets</li>
+                <li>Data history and management</li>
+                <li>Responsive design for all devices</li>
+                <li>Complete SQL database schema</li>
+                <li>Optional PHP API backend</li>
+            </ul>
+        </div>
+
+        <div class="setup-step">
+            <h3>🚀 Quick Start (Browser Only)</h3>
+            <p>For immediate use without any server setup:</p>
+            <ol>
+                <li>Ensure all files are in the same directory</li>
+                <li>Open <code>index.html</code> in your web browser</li>
+                <li>Register a new account or login</li>
+                <li>Start tracking your health data!</li>
+            </ol>
+            <a href="index.html" class="button">Launch Health Tracker</a>
+        </div>
+
+        <div class="setup-step">
+            <h3>🗄️ Database Setup (Optional)</h3>
+            <p>For persistent data storage with a MySQL/PostgreSQL database:</p>
+            
+            <h4>Step 1: Create Database</h4>
+            <div class="code-block">
+mysql -u root -p
+CREATE DATABASE health_tracker;
+USE health_tracker;
+            </div>
+            
+            <h4>Step 2: Import Schema</h4>
+            <div class="code-block">
+mysql -u root -p health_tracker < database.sql
+            </div>
+            
+            <h4>Step 3: Configure API (Optional)</h4>
+            <p>Edit <code>api.php</code> and update the database configuration:</p>
+            <div class="code-block">
+$config = [
+    'host' => 'localhost',
+    'dbname' => 'health_tracker',
+    'username' => 'your_username',
+    'password' => 'your_password',
+    'charset' => 'utf8mb4'
+];
+            </div>
+            
+            <h4>Step 4: Update Frontend</h4>
+            <p>Modify <code>script.js</code> to use API endpoints instead of localStorage:</p>
+            <div class="code-block">
+// Replace localStorage calls with API calls
+// Example: fetch('/api.php/health-data', {...})
+            </div>
+        </div>
+
+        <div class="setup-step">
+            <h3>⚙️ Configuration</h3>
+            <p>Customize the application by editing <code>config.js</code>:</p>
+            <ul>
+                <li>Default goals and targets</li>
+                <li>Chart colors and themes</li>
+                <li>Feature toggles</li>
+                <li>Validation rules</li>
+                <li>API endpoints</li>
+            </ul>
+        </div>
+
+        <div class="setup-step">
+            <h3>📱 Mobile Compatibility</h3>
+            <p>The application is fully responsive and works on:</p>
+            <ul>
+                <li>Desktop browsers (Chrome, Firefox, Safari, Edge)</li>
+                <li>Tablet devices (iPad, Android tablets)</li>
+                <li>Mobile phones (iOS Safari, Chrome Mobile)</li>
+            </ul>
+            <div class="warning">
+                <strong>Note:</strong> For best mobile experience, add the app to your home screen.
+            </div>
+        </div>
+
+        <div class="setup-step">
+            <h3>🔧 Troubleshooting</h3>
+            <h4>Common Issues:</h4>
+            <ul>
+                <li><strong>Charts not displaying:</strong> Ensure Chart.js is loaded properly</li>
+                <li><strong>Data not saving:</strong> Check browser localStorage permissions</li>
+                <li><strong>Mobile layout issues:</strong> Clear browser cache and reload</li>
+                <li><strong>Database connection errors:</strong> Verify database credentials in api.php</li>
+            </ul>
+        </div>
+
+        <div class="setup-step">
+            <h3>📊 Sample Data</h3>
+            <p>To test the application with sample data, you can:</p>
+            <ol>
+                <li>Register a new account</li>
+                <li>Add sample health data for the past 30 days</li>
+                <li>Set different goals to see progress tracking</li>
+                <li>View trends and analytics</li>
+            </ol>
+            <button class="button" onclick="generateSampleData()">Generate Sample Data</button>
+        </div>
+
+        <div class="setup-step">
+            <h3>🎨 Customization</h3>
+            <p>Make the application your own:</p>
+            <ul>
+                <li>Modify colors in <code>styles.css</code></li>
+                <li>Adjust default goals in <code>config.js</code></li>
+                <li>Add new health metrics in the database schema</li>
+                <li>Customize the UI components</li>
+            </ul>
+        </div>
+
+        <div class="setup-step">
+            <h3>📈 Advanced Features</h3>
+            <p>The system includes several advanced capabilities:</p>
+            <ul>
+                <li>Stored procedures for efficient database operations</li>
+                <li>Views for pre-calculated statistics</li>
+                <li>Triggers for automatic goal setting</li>
+                <li>REST API endpoints for external integrations</li>
+                <li>Export functionality for data analysis</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="index.html" class="button">🚀 Launch Health Tracker</a>
+            <a href="README.md" class="button" target="_blank">📖 View Documentation</a>
+        </div>
+    </div>
+
+    <script>
+        function generateSampleData() {
+            // This would generate sample data for testing
+            alert('Sample data generation feature would be implemented here. For now, please manually add some health data entries to test the application.');
+        }
+
+        // Check if localStorage is available
+        function checkLocalStorage() {
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // Check if Chart.js is available
+        function checkChartJS() {
+            return typeof Chart !== 'undefined';
+        }
+
+        // Display system status
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusDiv = document.createElement('div');
+            statusDiv.innerHTML = `
+                <div class="setup-step">
+                    <h3>🔍 System Status</h3>
+                    <div class="status ${checkLocalStorage() ? 'success' : 'error'}">
+                        LocalStorage: ${checkLocalStorage() ? '✓ Available' : '✗ Not Available'}
+                    </div>
+                    <div class="status ${checkChartJS() ? 'success' : 'error'}">
+                        Chart.js: ${checkChartJS() ? '✓ Loaded' : '✗ Not Loaded'}
+                    </div>
+                    <div class="status success">
+                        Browser: ${navigator.userAgent.includes('Chrome') ? 'Chrome' : navigator.userAgent.includes('Firefox') ? 'Firefox' : navigator.userAgent.includes('Safari') ? 'Safari' : 'Other'} - ✓ Compatible
+                    </div>
+                </div>
+            `;
+            document.querySelector('.setup-container').insertBefore(statusDiv, document.querySelector('.setup-container').children[1]);
+        });
+    </script>
+</body>
+</html>
