@@ -1,57 +1,15 @@
 {
-  "name": "health-tracker-system",
+  "name": "health_tracker",
   "version": "1.0.0",
-  "description": "A comprehensive web-based health tracking application that helps users monitor their daily health activities and achieve wellness goals.",
-  "main": "index.html",
+  "description": "Health Tracker Web App",
+  "main": "server.js",
   "scripts": {
-    "start": "python -m http.server 8000",
-    "serve": "npx serve .",
-    "dev": "npx live-server --port=3000 --open=index.html",
-    "build": "echo 'No build process needed for this static application'",
-    "test": "echo 'Run the application in a browser to test functionality'"
+    "start": "node server.js"
   },
-  "keywords": [
-    "health",
-    "tracker",
-    "fitness",
-    "wellness",
-    "monitoring",
-    "dashboard",
-    "charts",
-    "goals",
-    "web-app",
-    "responsive"
-  ],
-  "author": "Health Tracker Team",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/your-username/health-tracker-system.git"
-  },
-  "bugs": {
-    "url": "https://github.com/your-username/health-tracker-system/issues"
-  },
-  "homepage": "https://github.com/your-username/health-tracker-system#readme",
-  "devDependencies": {
-    "live-server": "^1.2.2",
-    "serve": "^14.2.1"
+  "dependencies": {
+    "express": "^4.21.0"
   },
   "engines": {
-    "node": ">=14.0.0"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ],
-  "files": [
-    "index.html",
-    "styles.css",
-    "script.js",
-    "config.js",
-    "database.sql",
-    "api.php",
-    "setup.html",
-    "README.md"
-  ]
+    "node": ">=14"
+  }
 }
